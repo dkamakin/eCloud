@@ -2,6 +2,7 @@ package com.dell.ecloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,12 +18,17 @@ public class FileController {
         this.storageService = storageService;
     }
 
-    @PostMapping("/")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    @GetMapping("/")
+    public String showMainPage() {
+        return "main";
+    }
+
+    @PostMapping("/upload")
+    public String fileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         storageService.store(file);
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+                "File " + file.getOriginalFilename() + " was successfully uploaded");
 
         return "redirect:/";
     }

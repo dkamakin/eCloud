@@ -1,6 +1,7 @@
 package com.dell.ecloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
+@Service
 public class FileStorageService {
 
     private final Path rootLocation = Path.of("test");
@@ -21,17 +23,14 @@ public class FileStorageService {
     public void store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new IOException("Failed to store empty file.");
+                throw new IOException("Error: the file is empty");
             }
 
             Path destinationFile = this.rootLocation.resolve(
-                    Paths.get(Objects.requireNonNull(file.getOriginalFilename())))
-                    .normalize().toAbsolutePath();
+                    Paths.get(Objects.requireNonNull(file.getOriginalFilename()))
+                    .normalize().toAbsolutePath());
 
-            try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, destinationFile,
-                        StandardCopyOption.REPLACE_EXISTING);
-            }
+            Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException e) {
             System.out.println("Failed to store the file. " + e.getMessage());
