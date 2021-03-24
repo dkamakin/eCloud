@@ -1,4 +1,4 @@
-package com.dell.ecloud;
+package com.dell.ecloud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -18,12 +18,7 @@ public class FileController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/")
-    public String showMainPage() {
-        return "main";
-    }
-
-    @GetMapping("/uploads/{filename}")
+    @GetMapping("/uploads/get/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> fileDownload(@PathVariable("filename") String fileName) {
         Resource file = storageService.toResource(fileName);
@@ -31,10 +26,14 @@ public class FileController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file) {
         storageService.store(file);
         return "redirect:/";
     }
 
+    @GetMapping("/remove/{filename}")
+    public boolean fileRemove(@PathVariable("filename") String fileName) {
+        return storageService.remove(fileName);
+    }
 }

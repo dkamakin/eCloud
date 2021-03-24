@@ -1,5 +1,7 @@
-package com.dell.ecloud;
+package com.dell.ecloud.controller;
 
+import com.dell.ecloud.model.StudentFile;
+import com.dell.ecloud.model.StudentFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,9 +20,12 @@ import java.util.Objects;
 public class FileStorageService {
 
     private final Path rootPath = Paths.get("uploads");
+    private final StudentFileRepository repository;
 
     @Autowired
-    public FileStorageService() {}
+    public FileStorageService(StudentFileRepository repository) {
+        this.repository = repository;
+    }
 
     public void store(MultipartFile file) {
         try {
@@ -33,10 +38,19 @@ public class FileStorageService {
                     .normalize()).toAbsolutePath();
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-        }
-        catch (IOException e) {
+
+            StudentFile entity = new StudentFile(file.getName());
+            repository.save(entity);
+        } catch (IOException e) {
             System.out.println("Failed to store the file. " + e.getMessage());
         }
+    }
+
+    public boolean remove(String fileName) {
+        Path file = this.rootPath.resolve(Paths
+                .get(fileName).normalize()).toAbsolutePath();
+
+        return file.toFile().delete();
     }
 
     public Resource toResource(String fileName) {
