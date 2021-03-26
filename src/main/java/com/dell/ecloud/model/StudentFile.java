@@ -18,8 +18,43 @@ public class StudentFile {
 
     protected StudentFile() {}
 
-    public StudentFile(String name) {
+    public StudentFile(String name, String date, String university, String category) {
         this.name = name;
+        this.date = date;
+        this.university = university;
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override

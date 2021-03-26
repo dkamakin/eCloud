@@ -36,4 +36,5 @@ public class FileController {
     public boolean fileRemove(@PathVariable("filename") String fileName) {
         return storageService.remove(fileName);
     }
+    
 }

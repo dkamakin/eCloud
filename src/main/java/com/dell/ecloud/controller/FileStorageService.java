@@ -38,9 +38,6 @@ public class FileStorageService {
                     .normalize()).toAbsolutePath();
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-
-            StudentFile entity = new StudentFile(file.getName());
-            repository.save(entity);
         } catch (IOException e) {
             System.out.println("Failed to store the file. " + e.getMessage());
         }
