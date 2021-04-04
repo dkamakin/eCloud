@@ -16,7 +16,8 @@ public class StudentFile {
     private String university;
     private String category;
 
-    protected StudentFile() {}
+    protected StudentFile() {
+    }
 
     public StudentFile(String name, String date, String university, String category) {
         this.name = name;
@@ -65,3 +66,4 @@ public class StudentFile {
     }
 
 }
+

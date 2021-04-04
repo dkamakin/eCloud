@@ -2,6 +2,7 @@ package com.dell.ecloud.controller;
 
 import com.dell.ecloud.model.StudentFile;
 import com.dell.ecloud.model.StudentFileRepository;
+import com.dell.ecloud.model.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -14,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -21,10 +24,28 @@ public class FileStorageService {
 
     private final Path rootPath = Paths.get("uploads");
     private final StudentFileRepository repository;
+    private final Time time;
 
     @Autowired
     public FileStorageService(StudentFileRepository repository) {
         this.repository = repository;
+        this.time = new Time();
+    }
+
+    public void saveEntity(MultipartFile file) {
+        StudentFile entity = new StudentFile(file.getOriginalFilename(), time.update().toString(),
+                "null", "null");
+        repository.save(entity);
+    }
+
+    public List<String> getListNames() {
+        Iterable<StudentFile> iterable = repository.findAll();
+        List<String> listNames = new ArrayList<>();
+
+        for (StudentFile elem : iterable)
+            listNames.add(elem.toString());
+
+        return listNames;
     }
 
     public void store(MultipartFile file) {
@@ -38,6 +59,7 @@ public class FileStorageService {
                     .normalize()).toAbsolutePath();
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+            saveEntity(file);
         } catch (IOException e) {
             System.out.println("Failed to store the file. " + e.getMessage());
         }

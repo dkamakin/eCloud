@@ -1,5 +1,6 @@
 package com.dell.ecloud.controller;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,12 @@ public class FileController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
+    @GetMapping("/uploads/listNames")
+    @ResponseBody
+    public ResponseEntity<String> fileList() {
+        return ResponseEntity.ok(new Gson().toJson(storageService.getListNames()));
+    }
+
     @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file) {
         storageService.store(file);
@@ -36,5 +43,5 @@ public class FileController {
     public boolean fileRemove(@PathVariable("filename") String fileName) {
         return storageService.remove(fileName);
     }
-    
+
 }

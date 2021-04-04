@@ -1,9 +1,29 @@
 <html>
-<body>
-    <form method="post" enctype="multipart/form-data"
-        action="/uploads">
-        <input type="file" name="file"><br />
-        <input type="submit" value="Upload">
-    </form>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>eCloud</title>
+    </head>
+
+    <pre>
+
+    </pre>
+
+    <script>
+        let url = "/uploads/listNames"
+        const poemDisplay = document.querySelector('pre');
+
+        fetch(url).then(function(response) {
+            response.text().then(function(text) {
+                poemDisplay.textContent = text;
+            });
+        });
+    </script>
+
+    <body>
+        <form method="post" enctype="multipart/form-data"
+            action="/uploads">
+            <input type="file" name="file"><br />
+            <input type="submit" value="Upload">
+        </form>
+    </body>
 </html>
