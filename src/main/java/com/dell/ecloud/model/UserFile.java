@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class StudentFile {
+public class UserFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +16,10 @@ public class StudentFile {
     private String university;
     private String category;
 
-    protected StudentFile() {
+    protected UserFile() {
     }
 
-    public StudentFile(String name, String date, String university, String category) {
+    public UserFile(String name, String date, String university, String category) {
         this.name = name;
         this.date = date;
         this.university = university;
@@ -42,6 +42,10 @@ public class StudentFile {
         return category;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -61,7 +65,7 @@ public class StudentFile {
     @Override
     public String toString() {
         return String.format(
-                "StudentFile[id=%d, name = %s]",
+                "UserFile[id %d, name %s]",
                 id, name);
     }
 

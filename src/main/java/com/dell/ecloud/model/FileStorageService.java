@@ -1,8 +1,6 @@
-package com.dell.ecloud.controller;
+package com.dell.ecloud.model;
 
-import com.dell.ecloud.model.StudentFile;
-import com.dell.ecloud.model.StudentFileRepository;
-import com.dell.ecloud.model.Time;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,39 +18,44 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class FileStorageService {
 
     private final Path rootPath = Paths.get("uploads");
-    private final StudentFileRepository repository;
+    private final UserFileRepository repository;
     private final Time time;
 
     @Autowired
-    public FileStorageService(StudentFileRepository repository) {
+    public FileStorageService(UserFileRepository repository) {
         this.repository = repository;
         this.time = new Time();
     }
 
     public void saveEntity(MultipartFile file) {
-        StudentFile entity = new StudentFile(file.getOriginalFilename(), time.update().toString(),
-                "null", "null");
+        log.info("Saving file (" + file.getOriginalFilename() + ") entity to the repository");
+        UserFile entity = new UserFile(file.getOriginalFilename(), time.update().toString(),
+                null, null);
         repository.save(entity);
+        log.info("File saved to the repository");
     }
 
     public List<String> getListNames() {
-        Iterable<StudentFile> iterable = repository.findAll();
+        Iterable<UserFile> iterable = repository.findAll();
         List<String> listNames = new ArrayList<>();
 
-        for (StudentFile elem : iterable)
+        for (UserFile elem : iterable)
             listNames.add(elem.toString());
 
+        log.info("Returning list of the names");
         return listNames;
     }
 
     public void store(MultipartFile file) {
+        log.info("Storing a file (" + file.getOriginalFilename() + ')');
+
         try {
-            if (file.isEmpty()) {
-                throw new IOException("Error: the file is empty");
-            }
+            if (file.isEmpty())
+                throw new IOException("Error: the file (" + file.getOriginalFilename() + ") is empty");
 
             Path destinationFile = this.rootPath.resolve(Paths
                     .get(Objects.requireNonNull(file.getOriginalFilename()))
@@ -60,16 +63,18 @@ public class FileStorageService {
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
             saveEntity(file);
+            log.info("File stored");
         } catch (IOException e) {
-            System.out.println("Failed to store the file. " + e.getMessage());
+            log.error("Couldn't save the file. " + e.getMessage());
         }
     }
 
     public boolean remove(String fileName) {
         Path file = this.rootPath.resolve(Paths
                 .get(fileName).normalize()).toAbsolutePath();
-
-        return file.toFile().delete();
+        boolean result = file.toFile().delete();
+        log.info("File (" + fileName + ") is " + (result ? "deleted" : "not deleted"));
+        return result;
     }
 
     public Resource toResource(String fileName) {
