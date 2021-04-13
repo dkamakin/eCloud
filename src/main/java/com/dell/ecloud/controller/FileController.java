@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,7 @@ public class FileController {
     }
 
     @DeleteMapping("/uploads/{filename}")
-    public boolean fileRemove(@PathVariable("filename") String fileName) {
+    public boolean fileDelete(@PathVariable("filename") String fileName) {
         return storageService.remove(fileName);
     }
 
@@ -39,6 +40,10 @@ public class FileController {
         return ResponseEntity.ok(new Gson().toJson(storageService.getListNames()));
     }
 
+    /*
+     get user from service
+     */
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file) {
         storageService.store(file);

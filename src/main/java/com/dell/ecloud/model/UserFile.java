@@ -11,20 +11,32 @@ public class UserFile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private String name;
     private String date;
     private String university;
     private String category;
+    private String nickname;
+    // make a reference to the user table
 
-    protected UserFile() {
-    }
+    protected UserFile() {}
 
-    public UserFile(String name, String date, String university, String category) {
+    public UserFile(String name, String date, String university, String category, String nickname) {
+        this.nickname = nickname;
         this.name = name;
         this.date = date;
         this.university = university;
         this.category = category;
     }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
 
     public String getName() {
         return name;
@@ -65,8 +77,8 @@ public class UserFile {
     @Override
     public String toString() {
         return String.format(
-                "UserFile[id %d, name %s]",
-                id, name);
+                "UserFile[id %d, name %s, user nickname %s]",
+                id, name, nickname);
     }
 
 }

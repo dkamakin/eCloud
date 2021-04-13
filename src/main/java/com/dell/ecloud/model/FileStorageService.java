@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,8 +34,13 @@ public class FileStorageService {
 
     public void saveEntity(MultipartFile file) {
         log.info("Saving file (" + file.getOriginalFilename() + ") entity to the repository");
+
+        String nickname = SecurityContextHolder
+                .getContext()
+                .getAuthentication().getName(); // make in FileController
+
         UserFile entity = new UserFile(file.getOriginalFilename(), time.update().toString(),
-                null, null);
+                null, null, nickname);
         repository.save(entity);
         log.info("File saved to the repository");
     }

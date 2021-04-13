@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>eCloud - login</title>
+</head>
+
+<body>
+<form action="/login" method="post">
+    <div class="form-group">
+        <label for="email">Email or username</label>
+        <input class="form-control" id="email" type="text" name="username">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" id="password" type="password" name="password">
+    </div>
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+    <input class="button" type="submit" value="Enter"/>
+</form>
+</body>
+
+</html>

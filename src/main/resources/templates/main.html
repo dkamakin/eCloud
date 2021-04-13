@@ -4,9 +4,7 @@
         <title>eCloud</title>
     </head>
 
-    <pre>
-
-    </pre>
+    <pre></pre>
 
     <script>
         let url = "/uploads"
@@ -20,10 +18,16 @@
     </script>
 
     <body>
+        <div>
+            <a href="/registration">Sign up</a>
+            <a href="/login">Sign in</a>
+        </div>
+
         <form method="post" enctype="multipart/form-data"
             action="/uploads">
             <input type="file" name="file"><br />
             <input type="submit" value="Upload">
         </form>
     </body>
+
 </html>

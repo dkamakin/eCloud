@@ -14,18 +14,21 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String email;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
+    private String username;
     private String password;
     private String passwordConfirm;
     private String nickname;
     private String university;
     private long karma;
-    private Set<Role> roles;
 
     protected User() {}
 
     public User(String email, String password, String nickname, String university, long karma) {
-        this.email = email;
+        this.username = email;
         this.password = password;
         this.nickname = nickname;
         this.university = university;
@@ -51,14 +54,9 @@ public class User implements UserDetails {
     public String getUniversity() {
         return university;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     public String getPassword() {
@@ -67,27 +65,27 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public String getNickname() {
@@ -106,8 +104,8 @@ public class User implements UserDetails {
         this.university = university;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
