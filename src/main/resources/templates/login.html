@@ -1,39 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <title>Sign in</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg fixed-top ">
-    <a class="navbar-brand" href="/">Home</a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-        <ul class="navbar-nav mr-4">
-            <li class="nav-item">
-                <a class="nav-link" href="/registration">Sign up</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="/post">Post</a>
-            </li>
-
-        </ul>
-    </div>
-
-</nav>
+<div class="load-html" data-source="/navbar"></div>
 
 <div class="ui centered padded grid">
     <div class="ui segment" style="width: 500px; padding: 40px; margin-top: 200px">
@@ -51,6 +30,15 @@
     </form>
     </div>
 </div>
-</body>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".load-html").each(function () {
+            $(this).load(this.dataset.source);
+        });
+    });
+</script>
+
+</body>
 </html>

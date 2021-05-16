@@ -17,7 +17,6 @@ public class UserFile {
     private String university;
     private String category;
     private String nickname;
-    // make a reference to the user table
 
     protected UserFile() {}
 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,12 +40,13 @@ public class FileController {
         return ResponseEntity.ok(new Gson().toJson(storageService.getListNames()));
     }
 
-    /*
-     get user from service
-     */
     @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file) {
-        storageService.store(file);
+        String nickname = SecurityContextHolder
+                .getContext()
+                .getAuthentication().getName();
+
+        storageService.store(file, nickname);
         return "redirect:/";
     }
 
