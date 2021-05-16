@@ -50,9 +50,9 @@ public class FileStorageService {
         List<String> listNames = new ArrayList<>();
 
         for (UserFile elem : iterable)
-            listNames.add(elem.toString());
+            listNames.add(elem.getName());
 
-        log.info("Returning list of the names");
+        log.info("Returning list of the names: " + listNames);
         return listNames;
     }
 
@@ -89,7 +89,7 @@ public class FileStorageService {
                     .get(fileName).normalize()).toAbsolutePath();
 
             Resource resource = new UrlResource(file.toUri());
-            System.out.println(file.getParent());
+
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {

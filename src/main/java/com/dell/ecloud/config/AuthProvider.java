@@ -29,6 +29,11 @@ public class AuthProvider implements AuthenticationProvider {
 
         User user = (User) userService.loadUserByUsername(username);
 
+        if (user == null) {
+            log.warn("Trying find the user by nickname");
+            user = (User) userService.loadUserByNickname(username);
+        }
+
         if (user != null && (user.getUsername().equals(username) || user.getNickname().equals(username))) {
             if (!password.matches(user.getPassword())) {
                 log.warn("Wrong password");
@@ -37,7 +42,7 @@ public class AuthProvider implements AuthenticationProvider {
 
             Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
-            log.info("User successfully authenticated");
+            log.info("User successfully authenticated, role = " + user.getRoles());
             return new UsernamePasswordAuthenticationToken(user, password, authorities);
         } else  {
             log.warn("User not found");

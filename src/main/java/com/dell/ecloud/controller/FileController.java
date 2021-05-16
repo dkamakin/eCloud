@@ -43,7 +43,6 @@ public class FileController {
     /*
      get user from service
      */
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file) {
         storageService.store(file);

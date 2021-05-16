@@ -16,6 +16,17 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserDetails loadUserByNickname(String nickname) throws UsernameNotFoundException {
+        log.info("UserService: searching for user: " + nickname);
+        User user = userRepository.findByNickname(nickname);
+
+        if (user == null)
+            throw new UsernameNotFoundException("Error: user not found.");
+
+        log.info("Found user " + user.getUsername());
+        return user;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(email);
@@ -23,6 +34,7 @@ public class UserService implements UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException("Error: user not found.");
 
+        log.info("Found user " + user.getUsername());
         return user;
     }
 
