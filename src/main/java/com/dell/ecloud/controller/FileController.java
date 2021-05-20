@@ -1,11 +1,12 @@
 package com.dell.ecloud.controller;
 
 import com.dell.ecloud.model.FileStorageService;
-import com.google.gson.Gson;
+import com.dell.ecloud.model.UserFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class FileController {
         this.storageService = storageService;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/uploads/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> fileDownload(@PathVariable("filename") String fileName) {
@@ -29,6 +31,7 @@ public class FileController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/uploads/{filename}")
     public boolean fileDelete(@PathVariable("filename") String fileName) {
         return storageService.remove(fileName);
@@ -36,10 +39,11 @@ public class FileController {
 
     @GetMapping("/uploads")
     @ResponseBody
-    public ResponseEntity<String> fileList() {
-        return ResponseEntity.ok(new Gson().toJson(storageService.getListNames()));
+    public Iterable<UserFile> filesList() {
+        return storageService.getFilesList();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file) {
         String nickname = SecurityContextHolder

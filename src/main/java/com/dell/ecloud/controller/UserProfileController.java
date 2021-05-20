@@ -3,6 +3,7 @@ package com.dell.ecloud.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,11 +18,13 @@ public class UserProfileController {
     @Autowired
     public UserDetailsService userDetailsService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/profile")
     public String showRegistrationPage() {
         return "user_profile";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/profile/info")
     @ResponseBody
     public ResponseEntity<UserDetails> getUserInfo() {

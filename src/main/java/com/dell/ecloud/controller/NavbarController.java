@@ -10,4 +10,5 @@ public class NavbarController {
     public String showLoginPage() {
         return "navbar";
     }
+
 }

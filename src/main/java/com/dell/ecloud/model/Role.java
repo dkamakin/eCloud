@@ -3,7 +3,7 @@ package com.dell.ecloud.model;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
-    USER;
+    ROLE_USER;
 
     @Override
     public String getAuthority() {

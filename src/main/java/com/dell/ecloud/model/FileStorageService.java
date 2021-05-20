@@ -13,8 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -41,15 +39,8 @@ public class FileStorageService {
         log.info("File saved to the repository");
     }
 
-    public List<String> getListNames() {
-        Iterable<UserFile> iterable = repository.findAll();
-        List<String> listNames = new ArrayList<>();
-
-        for (UserFile elem : iterable)
-            listNames.add(elem.getName());
-
-        log.info("Returning list of the names: " + listNames);
-        return listNames;
+    public Iterable<UserFile> getFilesList() {
+        return repository.findAll();
     }
 
     public void store(MultipartFile file, String nickname) {

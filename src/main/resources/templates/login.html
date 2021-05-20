@@ -25,8 +25,8 @@
             <label for="password">Password</label>
             <input class="form-control" id="password" type="password" name="password">
         </div>
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-        <input class="button" type="submit" value="Enter"/>
+            <input class="button" type="submit" value="Enter"/>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
     </div>
 </div>

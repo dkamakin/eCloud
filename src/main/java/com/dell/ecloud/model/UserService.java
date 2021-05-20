@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
         userRepository.save(user);
         log.info("User successfully registered");
         return true;

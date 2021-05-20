@@ -27,7 +27,7 @@ public class RegistrationController {
     public String saveUser(String nickname, String username, String password) {
         log.info("Registration of a new user: " + username);
         User user = new User(username, password, nickname, null, 0L);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
         userService.saveUser(user);
         return "redirect:/login";
     }
