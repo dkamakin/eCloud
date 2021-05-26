@@ -2,6 +2,7 @@ package com.dell.ecloud.controller;
 
 import com.dell.ecloud.model.FileStorageService;
 import com.dell.ecloud.model.UserFile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@Slf4j
 public class FileController {
 
     private final FileStorageService storageService;
@@ -45,12 +47,13 @@ public class FileController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
-    public String fileUpload(@RequestParam("file") MultipartFile file) {
+    public String fileUpload(@RequestParam("file") MultipartFile file, String description, String university, String category) {
+        log.info("Description = " + description);
         String nickname = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getName();
 
-        storageService.store(file, nickname);
+        storageService.store(file, nickname, university, category, description);
         return "redirect:/";
     }
 

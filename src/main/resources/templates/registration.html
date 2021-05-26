@@ -13,6 +13,14 @@
 <body>
 
 <div class="load-html" data-source="/navbar"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".load-html").each(function () {
+            $(this).load(this.dataset.source);
+        });
+    });
+</script>
 
 <form action="/registration" method="post">
     <div class="ui segment" style="width: 500px; padding: 40px; margin-top: 200px">
@@ -32,15 +40,6 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </div>
 </form>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $(".load-html").each(function () {
-            $(this).load(this.dataset.source);
-        });
-    });
-</script>
 
 </body>
 </html>

@@ -7,7 +7,7 @@ axios.get('/uploads')
             container.innerHTML += "<div class=\"card\">\n" +
                 "  <div class=\"card-body\">\n" +
                 "    <h5 class=\"card-title\"> " + post['name'] + "</h5>\n" +
-                "    <p class=\"card-text\">Description</p>\n" +
+                "    <p class=\"card-text\">" + post['description'] + "</p>\n" +
                 "    <a href=\"/uploads/" + post['name'] + "\" class=\"btn btn-primary\">Download</a>\n" +
                 "  </div>\n" +
                 "</div>"

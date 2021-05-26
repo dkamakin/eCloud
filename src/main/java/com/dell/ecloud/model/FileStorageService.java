@@ -29,21 +29,14 @@ public class FileStorageService {
         this.time = new Time();
     }
 
-    public void saveEntity(MultipartFile file, String nickname) {
-        log.info("Saving file (" + file.getOriginalFilename() + ") entity to the repository");
-
-
-        UserFile entity = new UserFile(file.getOriginalFilename(), time.update().toString(),
-                null, null, nickname);
-        repository.save(entity);
-        log.info("File saved to the repository");
+    public void saveEntity(MultipartFile file, String nickname, String university, String category, String desciption) {
     }
 
     public Iterable<UserFile> getFilesList() {
         return repository.findAll();
     }
 
-    public void store(MultipartFile file, String nickname) {
+    public void store(MultipartFile file, String nickname, String university, String category, String description) {
         log.info("Storing a file (" + file.getOriginalFilename() + ')');
 
         try {
@@ -55,7 +48,15 @@ public class FileStorageService {
                     .normalize()).toAbsolutePath();
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-            saveEntity(file, nickname);
+
+            log.info("Saving file (" + file.getOriginalFilename() + ") entity to the repository");
+
+
+            UserFile entity = new UserFile(file.getOriginalFilename(), time.update().toString(), university,
+                    category, description, nickname);
+            repository.save(entity);
+            log.info("File saved to the repository");
+
             log.info("File stored");
         } catch (IOException e) {
             log.error("Couldn't save the file. " + e.getMessage());
