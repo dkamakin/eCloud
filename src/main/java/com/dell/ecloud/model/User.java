@@ -25,7 +25,8 @@ public class User implements UserDetails {
     private String university;
     private long karma;
 
-    protected User() {}
+    protected User() {
+    }
 
     public User(String email, String password, String nickname, String university, long karma) {
         this.username = email;
@@ -54,6 +55,7 @@ public class User implements UserDetails {
     public String getUniversity() {
         return university;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

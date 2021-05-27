@@ -1,11 +1,32 @@
-.custom-file-input.selected:lang(en)::after {
-    content: "" !important;
+.u-section-1 .u-sheet-1 {
+    min-height: 500px;
 }
 
-.custom-file {
-    overflow: hidden;
+.u-section-1 .u-form-1 {
+    height: 317px;
+    width: 570px;
+    margin: 0 auto 60px;
 }
 
-.custom-file-input {
-    white-space: nowrap;
+.u-section-1 .u-form-group-2 {
+    margin-left: 0;
+}
+
+.u-section-1 .u-btn-1 {
+    letter-spacing: 1px;
+    border-style: none;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+    .u-section-1 .u-form-1 {
+        width: 540px;
+    }
+}
+
+@media (max-width: 575px) {
+    .u-section-1 .u-form-1 {
+        width: 340px;
+    }
 }

@@ -44,7 +44,7 @@ public class AuthProvider implements AuthenticationProvider {
 
             log.info("User successfully authenticated, role = " + user.getRoles());
             return new UsernamePasswordAuthenticationToken(user, password, authorities);
-        } else  {
+        } else {
             log.warn("User not found");
             throw new BadCredentialsException("Username not found");
         }

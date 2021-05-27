@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class NavbarController {
+public class AboutController {
 
-    @GetMapping("/navbar")
-    public String showNavbar() {
-        return "navbar";
+    @GetMapping("/about")
+    public String showFooter() {
+        return "about";
     }
 
 }

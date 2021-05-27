@@ -1,8 +1,5 @@
 package com.dell.ecloud.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,16 +18,28 @@ public class UserFile {
     private String category;
     private String description;
     private String nickname;
+    private String fileName;
 
-    protected UserFile() {}
+    protected UserFile() {
+    }
 
-    public UserFile(String name, String date, String university, String category, String description, String nickname) {
+    public UserFile(String name, String date, String university, String category, String description,
+                    String nickname, String fileName) {
         this.nickname = nickname;
         this.name = name;
         this.date = date;
         this.university = university;
         this.description = description;
         this.category = category;
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getNickname() {

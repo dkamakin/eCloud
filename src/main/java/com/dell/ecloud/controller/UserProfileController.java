@@ -21,7 +21,7 @@ public class UserProfileController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/profile")
     public String showRegistrationPage() {
-        return "user_profile";
+        return "profile";
     }
 
     @PreAuthorize("hasRole('USER')")

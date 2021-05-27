@@ -1,20 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <title>New post</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-    <link rel="stylesheet" th:href="@{/css/post.css}"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Post</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" media="screen"/>
+    <link rel="stylesheet" th:href="@{/css/post.css}" media="screen"/>
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta property="og:title" content="Post">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
 </head>
 
-<body>
+<body class="u-body">
+<header class="u-clearfix u-header u-header" id="sec-b81d">
+    <div class="load-html" data-source="/navbar"></div>
+</header>
 
-<div class="load-html" data-source="/navbar"></div>
+<section class="u-clearfix u-section-1" id="sec-b171">
+    <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
+        <div class="u-form u-form-1">
+            <form action="/uploads" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="inputAddress">Name</label>
+                    <input type="text" class="form-control" name="name" id="inputAddress">
+                </div>
+                <div class="form-group">
+                    <label for="selectUniversity">University</label>
+                    <select class="form-control" id="selectUniversity" name="university">
+                        <option>ETU</option>
+                        <option>ITMO</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descriptionArea">Description</label>
+                    <textarea class="form-control" name="description" id="descriptionArea" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="file" name="file" class="form-control-file" id="fileUpload">
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+                <input type="hidden" th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="load-html" data-source="/footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script class="u-script" type="text/javascript" src="../static/js/main.js" defer=""></script>
 <script type="text/javascript">
     $(function () {
         $(".load-html").each(function () {
@@ -22,27 +60,6 @@
         });
     });
 </script>
-
-<form method="post" enctype="multipart/form-data"
-          action="/uploads">
-    <div class="ui segment" style="width: 500px; padding: 40px; margin-top: 200px">
-        <div class="form-group">
-            <label for="description">Description</label>
-            <input class="form-control" id="description" type="text" name="description">
-        </div>
-        <div class="form-group">
-            <label for="category">Category</label>
-            <input class="form-control" id="category" type="text" name="category">
-        </div>
-        <div class="form-group">
-            <label for="university">University</label>
-            <input class="form-control" id="university" type="text" name="university">
-        </div>
-        <input type="file" name="file"><br />
-        <input type="submit" value="Upload">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    </div>
-</form>
 
 </body>
 </html>

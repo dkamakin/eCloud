@@ -1,45 +1,100 @@
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="/">Home</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-        <ul class="navbar-nav mr-4">
-            <div sec:authorize="hasRole('USER')">
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
+<div class="u-clearfix u-sheet u-sheet-1">
+    <a href="/" class="u-image u-logo u-image-1" data-image-width="640" data-image-height="160">
+        <img src="../static/images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="216">
+    </a>
+    <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+               href="#">
+                <svg>
+                    <use xlink:href="#menu-hamburger"></use>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <defs>
+                        <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                            <rect y="1" width="16" height="2"></rect>
+                            <rect y="7" width="16" height="2"></rect>
+                            <rect y="13" width="16" height="2"></rect>
+                        </symbol>
+                    </defs>
+                </svg>
+            </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1">
+                <li class="u-nav-item"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="/" style="padding: 10px 20px;">Home</a>
+                </li>
+                <li class="u-nav-item"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="/post" style="padding: 10px 20px;">Post</a>
+                </li>
+                <li class="u-nav-item" sec:authorize="hasRole('USER')"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="/profile" style="padding: 10px 20px;">Profile</a>
+                </li>
+                <li class="u-nav-item" sec:authorize="hasRole('ANONYMOUS')"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="/registration" style="padding: 10px 20px;">Sign up</a>
+                </li>
+                <li class="u-nav-item" sec:authorize="hasRole('ANONYMOUS')"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="/login" style="padding: 10px 20px;">Sign in</a>
+                </li>
+                <li class="u-nav-item" sec:authorize="hasRole('USER')"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="#" onclick="document.getElementById('form-logout').submit();" style="padding: 10px 20px;">Sign
+                    out</a>
+                    <form method="post" action="/logout" id="form-logout">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    </form>
+                </li>
+                <li class="u-nav-item"><a
+                        class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                        href="/about" style="padding: 10px 20px;">About</a>
+                </li>
+            </ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                <div class="u-sidenav-overflow">
+                    <div class="u-menu-close"></div>
+                    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/"
+                                                  style="padding: 10px 20px;">Home</a>
+                        </li>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/post"
+                                                  style="padding: 10px 20px;">Post</a>
+                        </li>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link" sec:authorize="hasRole('USER')"
+                                                  href="/profile"
+                                                  style="padding: 10px 20px;">Profile</a>
+                        </li>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link" sec:authorize="hasRole('ANONYMOUS')"
+                                                  href="/registration"
+                                                  style="padding: 10px 20px;">Sign up</a>
+                        </li>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link" sec:authorize="hasRole('ANONYMOUS')"
+                                                  href="/login"
+                                                  style="padding: 10px 20px;">Sign in</a>
+                        </li>
+                        <li class="u-nav-item" sec:authorize="hasRole('USER')"><a
+                                class="u-button-style u-nav-link"
+                                href="#" onclick="document.getElementById('form-logout-mobile').submit();"
+                                style="padding: 10px 20px;">Sign
+                            out</a>
+                            <form method="post" action="/logout" id="form-logout-mobile">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            </form>
+                        </li>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/about"
+                                                  style="padding: 10px 20px;">About</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-            <div sec:authorize="hasRole('USER')">
-            <li class="nav-item">
-                <a class="nav-link" href="/post">Post</a>
-            </li>
-            </div>
-
-            <div sec:authorize="hasRole('USER')">
-            <li class="nav-item">
-                <a href="#" onclick="document.getElementById('form-logout').submit();">Sign out</a>
-                <form method="post" action="/logout" id="form-logout">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                </form>
-            </li>
-            </div>
-
-            <div sec:authorize="hasRole('ANONYMOUS')">
-            <li class="nav-item">
-                <a class="nav-link" href="/registration">Sign up</a>
-            </li>
-            </div>
-
-            <div sec:authorize="hasRole('ANONYMOUS')">
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Sign in</a>
-            </li>
-            </div>
-        </ul>
-    </div>
-
-</nav>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+    </nav>
+</div>

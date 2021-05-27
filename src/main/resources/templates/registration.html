@@ -1,19 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Sign up</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+    <link rel="stylesheet" th:href="@{/css/main.css}" media="screen"/>
+    <link rel="stylesheet" th:href="@{/css/registration.css}" media="screen"/>
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <meta property="og:title" content="Sign up">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
 </head>
 
-<body>
+<body class="u-body">
+<header class="u-clearfix u-header u-header" id="sec-b81d">
+    <div class="load-html" data-source="/navbar"></div>
+</header>
 
-<div class="load-html" data-source="/navbar"></div>
+<section class="u-clearfix u-grey-10 u-section-1" id="sec-d225">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-gutter-18 u-layout-wrap u-layout-wrap-1">
+            <div class="u-gutter-0 u-layout" style="">
+                <div class="u-layout-row" style="">
+                    <div class="u-size-24 u-size-60-md">
+                        <div class="u-layout-row">
+                            <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-1"
+                                 src="">
+                                <div class="u-container-layout u-valign-middle u-container-layout-1" src="">
+                                    <p class="u-text u-text-1">eCloud is a student cloud for downloading and storing
+                                        lecture notes, lab notes, and any files. After registration, you will be able to
+                                        upload files, view your profile and put likes on your own :) </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-size-36 u-size-60-md" style="">
+                        <div class="u-layout-col" style="">
+                            <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-40 u-white u-layout-cell-2">
+                                <div class="u-container-layout u-container-layout-2" src="">
+                                    <p class="u-text u-text-2">Spreading knowledge is pleasant and useful! </p>
+                                </div>
+                            </div>
+                            <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-20 u-white u-layout-cell-3"
+                                 src="">
+                                <div class="u-container-layout u-container-layout-3">
+                                    <h2 class="u-align-center u-text u-text-3">Sign up<br>
+                                    </h2>
+                                    <div class="u-expanded-width u-form u-form-1">
+                                        <form action="/registration" method="POST"
+                                              class="u-clearfix u-form-custom-backend u-form-horizontal u-form-spacing-15 u-inner-form"
+                                              style="padding: 15px" source="custom" redirect="true">
+                                            <div class="u-form-email u-form-group">
+                                                <label for="email-558c"
+                                                       class="u-form-control-hidden u-label">Email</label>
+                                                <input type="email" placeholder="Email" id="email-558c" name="username"
+                                                       class="u-border-1 u-border-grey-30 u-input u-input-rectangle"
+                                                       required="">
+                                            </div>
+                                            <div class="u-form-group u-form-name">
+                                                <label for="name-558c"
+                                                       class="u-form-control-hidden u-label">Name</label>
+                                                <input type="text" placeholder="Name" id="name-558c" name="nickname"
+                                                       class="u-border-1 u-border-grey-30 u-input u-input-rectangle"
+                                                       required="">
+                                            </div>
+                                            <div class="u-form-group u-form-password">
+                                                <label for="text-bde9"
+                                                       class="u-form-control-hidden u-label">Password</label>
+                                                <input type="password" placeholder="Password" id="text-bde9"
+                                                       name="password"
+                                                       class="u-border-1 u-border-grey-30 u-input u-input-rectangle">
+                                            </div>
+                                            <div class="u-form-group u-form-submit">
+                                                <a href="#" class="u-btn u-btn-submit u-button-style">Submit</a>
+                                                <input type="submit" value="submit" class="u-form-control-hidden">
+                                                <input type="hidden" th:name="${_csrf.parameterName}"
+                                                       th:value="${_csrf.token}"/>
+                                            </div>
+                                            <div class="u-form-send-message u-form-send-success">Successfully logged in,
+                                                redirecting to login page
+                                            </div>
+                                            <div class="u-form-send-error u-form-send-message">Something went wrong
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="load-html" data-source="/footer"></div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script class="u-script" type="text/javascript" src="../static/js/main.js" defer=""></script>
 <script type="text/javascript">
     $(function () {
         $(".load-html").each(function () {
@@ -21,25 +109,6 @@
         });
     });
 </script>
-
-<form action="/registration" method="post">
-    <div class="ui segment" style="width: 500px; padding: 40px; margin-top: 200px">
-    <div class="form-group">
-        <label for="name">Username</label>
-        <input class="form-control" id="name" type="text" name="nickname">
-    </div>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input class="form-control" id="email" type="text" name="username">
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input class="form-control" id="password" type="password" name="password">
-    </div>
-        <input class="button" type="submit" value="Registration"/>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    </div>
-</form>
 
 </body>
 </html>

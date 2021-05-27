@@ -24,7 +24,6 @@ public class FileController {
         this.storageService = storageService;
     }
 
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/uploads/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> fileDownload(@PathVariable("filename") String fileName) {
@@ -47,13 +46,13 @@ public class FileController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
-    public String fileUpload(@RequestParam("file") MultipartFile file, String description, String university, String category) {
+    public String fileUpload(@RequestParam("file") MultipartFile file, String description, String university, String name) {
         log.info("Description = " + description);
         String nickname = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getName();
 
-        storageService.store(file, nickname, university, category, description);
+        storageService.store(file, nickname, university, name, description);
         return "redirect:/";
     }
 
