@@ -17,15 +17,15 @@ public class UserFile {
     private String university;
     private String category;
     private String description;
-    private String nickname;
+    private long userId;
     private String fileName;
 
     protected UserFile() {
     }
 
     public UserFile(String name, String date, String university, String category, String description,
-                    String nickname, String fileName) {
-        this.nickname = nickname;
+                    long userId, String fileName) {
+        this.userId = userId;
         this.name = name;
         this.date = date;
         this.university = university;
@@ -42,8 +42,8 @@ public class UserFile {
         this.fileName = fileName;
     }
 
-    public String getNickname() {
-        return nickname;
+    public long getUserId() {
+        return userId;
     }
 
     public void setDescription(String description) {
@@ -54,8 +54,8 @@ public class UserFile {
         return description;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

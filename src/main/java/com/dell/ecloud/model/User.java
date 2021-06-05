@@ -36,6 +36,10 @@ public class User implements UserDetails {
         this.karma = karma;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }

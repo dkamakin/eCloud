@@ -8,7 +8,7 @@ axios.get('/uploads')
                 "  <div class=\"card-body\">\n" +
                 "    <h5 class=\"card-title\"> " + post['name'] + "</h5>\n" +
                 "    <p class=\"card-text\">" + post['description'] + "</p>\n" +
-                "    <a href=\"/uploads/" + post['fileName'] + "\" class=\"btn btn-primary\">Download</a>\n" +
+                "    <a href=\"/uploads/" + post['userId'] + '/' + post['fileName'] + "\" class=\"btn btn-primary\">Download</a>\n" +
                 "  </div>\n" +
                 "</div>"
         }

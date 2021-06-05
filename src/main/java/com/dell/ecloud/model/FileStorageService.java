@@ -33,28 +33,38 @@ public class FileStorageService {
         return repository.findAll();
     }
 
-    public void store(MultipartFile file, String nickname, String university, String name, String description) {
-        log.info("Storing a file (" + file.getOriginalFilename() + ')');
+    public Iterable<UserFile> getFilesByUser(long id) {
+        return repository.findAllByUserId(id);
+    }
+
+    public void store(MultipartFile file, long id, String university, String name, String description) {
+        log.info("Storing the file (" + file.getOriginalFilename() + ')');
 
         try {
             if (file.isEmpty())
                 throw new IOException("Error: the file (" + file.getOriginalFilename() + ") is empty");
 
-            Path destinationFile = this.rootPath.resolve(Paths
+            Path dirPath = this.rootPath.resolve(Paths
+                    .get(String.valueOf(id))
+                    .normalize()).toAbsolutePath();
+
+            if (!dirPath.toFile().exists())
+                Files.createDirectory(dirPath);
+
+            Path destinationFile = dirPath.resolve(Paths
                     .get(Objects.requireNonNull(file.getOriginalFilename()))
                     .normalize()).toAbsolutePath();
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
-            log.info("Saving file (" + file.getOriginalFilename() + ") entity to the repository");
-
+            log.info("Saving the file (" + file.getOriginalFilename() + ") entity to the repository");
 
             UserFile entity = new UserFile(name, time.update().toString(), university,
-                    null, description, nickname, file.getOriginalFilename());
+                    null, description, id, file.getOriginalFilename());
             repository.save(entity);
-            log.info("File saved to the repository");
+            log.info("The file was saved to the repository");
 
-            log.info("File stored");
+            log.info("The file was stored");
         } catch (IOException e) {
             log.error("Couldn't save the file. " + e.getMessage());
         }
@@ -68,7 +78,7 @@ public class FileStorageService {
         return result;
     }
 
-    public Resource toResource(String fileName) {
+    public Resource getResource(String fileName) {
         try {
             Path file = this.rootPath.resolve(Paths
                     .get(fileName).normalize()).toAbsolutePath();
@@ -78,7 +88,7 @@ public class FileStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new MalformedURLException("Error: wrong path");
+                throw new MalformedURLException("Error: wrong path (" + file.toString() + ")");
             }
         } catch (MalformedURLException e) {
             System.out.println("Failed to return the file. " + e.getMessage());

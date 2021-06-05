@@ -2,7 +2,10 @@ package com.dell.ecloud.controller;
 
 import com.dell.ecloud.model.FileStorageService;
 import com.dell.ecloud.model.UserFile;
+import com.dell.ecloud.model.UserRepository;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -18,18 +21,26 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
 
     private final FileStorageService storageService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public FileController(FileStorageService storageService) {
+    public FileController(FileStorageService storageService, UserRepository userRepository) {
         this.storageService = storageService;
+        this.userRepository = userRepository;
     }
 
-    @GetMapping("/uploads/{filename}")
+    @GetMapping("/uploads/{id}/{filename}")
     @ResponseBody
-    public ResponseEntity<Resource> fileDownload(@PathVariable("filename") String fileName) {
-        Resource file = storageService.toResource(fileName);
+    public ResponseEntity<Resource> fileDownload(@PathVariable("id") long id, @PathVariable("filename") String fileName) {
+        Resource file = storageService.getResource(String.valueOf(id) + '/' + fileName);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @GetMapping("/uploads/{id}")
+    public Iterable<UserFile> filesByUser(@PathVariable long id) {
+        log.info("Searching for files uploaded by " + id);
+        return storageService.getFilesByUser(id);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -47,12 +58,13 @@ public class FileController {
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
     public String fileUpload(@RequestParam("file") MultipartFile file, String description, String university, String name) {
-        log.info("Description = " + description);
-        String nickname = SecurityContextHolder
+        String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getName();
 
-        storageService.store(file, nickname, university, name, description);
+        long id = userRepository.findByUsername(username).getId();
+
+        storageService.store(file, id, university, name, description);
         return "redirect:/";
     }
 
