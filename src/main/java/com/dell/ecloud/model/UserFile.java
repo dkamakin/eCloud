@@ -1,5 +1,6 @@
 package com.dell.ecloud.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,39 +10,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Getter
+@Setter
 public class UserFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
+    @Setter (AccessLevel.NONE)
     private long id;
 
-    @Getter
-    @Setter
     private String name;
-
-    @Getter
-    @Setter
     private String date;
-
-    @Getter
-    @Setter
     private String university;
-
-    @Getter
-    @Setter
     private String category;
-
-    @Getter
-    @Setter
     private String description;
-
-    @Getter
-    @Setter
     private long userId;
-
-    @Getter
-    @Setter
     private String fileName;
 
     protected UserFile() {

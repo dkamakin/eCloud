@@ -1,5 +1,6 @@
 package com.dell.ecloud.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,41 +11,24 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @Getter
-    @Setter
     private Set<Role> roles;
 
-    @Getter
-    @Setter
     private String username;
-
-    @Getter
-    @Setter
     private String password;
-
-    @Getter
-    @Setter
     private String passwordConfirm;
-
-    @Getter
-    @Setter
     private String nickname;
-
-    @Getter
-    @Setter
     private String university;
-
-    @Getter
-    @Setter
     private long karma;
 
     protected User() {
