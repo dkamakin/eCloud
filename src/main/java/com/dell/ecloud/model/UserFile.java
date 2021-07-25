@@ -16,7 +16,7 @@ public class UserFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter (AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     private String name;

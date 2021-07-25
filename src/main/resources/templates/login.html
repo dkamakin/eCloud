@@ -7,7 +7,8 @@
     <title>Sign in</title>
     <link media="screen" rel="stylesheet" th:href="@{/css/main.css}"/>
     <link media="screen" rel="stylesheet" th:href="@{/css/login.css}"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" id="u-theme-google-font"
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+          id="u-theme-google-font"
           rel="stylesheet">
     <meta content="Sign in" property="og:title">
     <meta content="website" property="og:type">
@@ -39,21 +40,24 @@
                                             <h2 class="u-align-center u-text u-text-1">Sign in<br>
                                             </h2>
                                             <div class="u-expanded-width u-form u-form-1">
-                                                <form action="/login" class="u-clearfix u-form-custom-backend u-form-horizontal u-form-spacing-15 u-inner-form"
+                                                <form action="/login"
+                                                      class="u-clearfix u-form-custom-backend u-form-horizontal u-form-spacing-15 u-inner-form"
                                                       method="POST"
                                                       redirect="true" source="custom" style="padding: 15px">
                                                     <input id="siteId" name="siteId" type="hidden" value="410554">
                                                     <input id="pageId" name="pageId" type="hidden" value="415624">
                                                     <div class="u-form-email u-form-group">
                                                         <label class="u-form-control-hidden u-label" for="email-558c">Email</label>
-                                                        <input class="u-border-1 u-border-grey-30 u-input u-input-rectangle" id="email-558c" name="username"
+                                                        <input class="u-border-1 u-border-grey-30 u-input u-input-rectangle"
+                                                               id="email-558c" name="username"
                                                                placeholder="Email"
                                                                required=""
                                                                type="email">
                                                     </div>
                                                     <div class="u-form-group u-form-name">
                                                         <label class="u-form-control-hidden u-label" for="name-558c">Password</label>
-                                                        <input class="u-border-1 u-border-grey-30 u-input u-input-rectangle" id="name-558c" name="password"
+                                                        <input class="u-border-1 u-border-grey-30 u-input u-input-rectangle"
+                                                               id="name-558c" name="password"
                                                                placeholder="Password"
                                                                required=""
                                                                type="password">
@@ -62,7 +66,8 @@
                                                         <a class="u-btn u-btn-submit u-button-style" href="#">Submit</a>
                                                         <input class="u-form-control-hidden" type="submit"
                                                                value="submit">
-                                                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}"
+                                                        <input th:name="${_csrf.parameterName}"
+                                                               th:value="${_csrf.token}"
                                                                type="hidden"/>
                                                     </div>
                                                     <div class="u-form-send-message u-form-send-success">Successfully
