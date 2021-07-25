@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta charset="utf-8">
-    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <meta content="np-template-header-footer-from-plugin" name="page_type">
     <title>Sign in</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" media="screen"/>
-    <link rel="stylesheet" th:href="@{/css/login.css}" media="screen"/>
-    <link id="u-theme-google-font" rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    <meta property="og:title" content="Sign in">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#478ac9">
-    <link rel="canonical" href="index.html">
-    <meta property="og:url" content="index.html">
+    <link media="screen" rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link media="screen" rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" id="u-theme-google-font"
+          rel="stylesheet">
+    <meta content="Sign in" property="og:title">
+    <meta content="website" property="og:type">
+    <meta content="#478ac9" name="theme-color">
+    <link href="index.html" rel="canonical">
+    <meta content="index.html" property="og:url">
 </head>
 
 <body class="u-body">
@@ -31,7 +31,7 @@
                             <div class="u-size-40">
                                 <div class="u-layout-row">
                                     <div class="u-container-style u-image u-layout-cell u-right-cell u-size-30 u-image-1"
-                                         data-image-width="1620" data-image-height="1080">
+                                         data-image-height="1080" data-image-width="1620">
                                         <div class="u-container-layout u-container-layout-1"></div>
                                     </div>
                                     <div class="u-align-left u-container-style u-layout-cell u-size-30 u-white u-layout-cell-2">
@@ -39,31 +39,31 @@
                                             <h2 class="u-align-center u-text u-text-1">Sign in<br>
                                             </h2>
                                             <div class="u-expanded-width u-form u-form-1">
-                                                <form action="/login" method="POST"
-                                                      class="u-clearfix u-form-custom-backend u-form-horizontal u-form-spacing-15 u-inner-form"
-                                                      style="padding: 15px" source="custom" redirect="true">
-                                                    <input type="hidden" id="siteId" name="siteId" value="410554">
-                                                    <input type="hidden" id="pageId" name="pageId" value="415624">
+                                                <form action="/login" class="u-clearfix u-form-custom-backend u-form-horizontal u-form-spacing-15 u-inner-form"
+                                                      method="POST"
+                                                      redirect="true" source="custom" style="padding: 15px">
+                                                    <input id="siteId" name="siteId" type="hidden" value="410554">
+                                                    <input id="pageId" name="pageId" type="hidden" value="415624">
                                                     <div class="u-form-email u-form-group">
-                                                        <label for="email-558c" class="u-form-control-hidden u-label">Email</label>
-                                                        <input type="email" placeholder="Email" id="email-558c"
-                                                               name="username"
-                                                               class="u-border-1 u-border-grey-30 u-input u-input-rectangle"
-                                                               required="">
+                                                        <label class="u-form-control-hidden u-label" for="email-558c">Email</label>
+                                                        <input class="u-border-1 u-border-grey-30 u-input u-input-rectangle" id="email-558c" name="username"
+                                                               placeholder="Email"
+                                                               required=""
+                                                               type="email">
                                                     </div>
                                                     <div class="u-form-group u-form-name">
-                                                        <label for="name-558c" class="u-form-control-hidden u-label">Password</label>
-                                                        <input type="password" placeholder="Password" id="name-558c"
-                                                               name="password"
-                                                               class="u-border-1 u-border-grey-30 u-input u-input-rectangle"
-                                                               required="">
+                                                        <label class="u-form-control-hidden u-label" for="name-558c">Password</label>
+                                                        <input class="u-border-1 u-border-grey-30 u-input u-input-rectangle" id="name-558c" name="password"
+                                                               placeholder="Password"
+                                                               required=""
+                                                               type="password">
                                                     </div>
                                                     <div class="u-form-group u-form-submit">
-                                                        <a href="#" class="u-btn u-btn-submit u-button-style">Submit</a>
-                                                        <input type="submit" value="submit"
-                                                               class="u-form-control-hidden">
-                                                        <input type="hidden" th:name="${_csrf.parameterName}"
-                                                               th:value="${_csrf.token}"/>
+                                                        <a class="u-btn u-btn-submit u-button-style" href="#">Submit</a>
+                                                        <input class="u-form-control-hidden" type="submit"
+                                                               value="submit">
+                                                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}"
+                                                               type="hidden"/>
                                                     </div>
                                                     <div class="u-form-send-message u-form-send-success">Successfully
                                                         logged in, redirecting to home page
@@ -97,7 +97,7 @@
 
 <div class="load-html" data-source="/footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script class="u-script" type="text/javascript" src="../static/js/main.js" defer=""></script>
+<script class="u-script" defer="" src="../static/js/main.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
         $(".load-html").each(function () {
