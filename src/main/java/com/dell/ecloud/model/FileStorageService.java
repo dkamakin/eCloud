@@ -88,7 +88,7 @@ public class FileStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new MalformedURLException("Error: wrong path (" + file.toString() + ")");
+                throw new MalformedURLException("Error: wrong path (" + file + ")");
             }
         } catch (MalformedURLException e) {
             System.out.println("Failed to return the file. " + e.getMessage());

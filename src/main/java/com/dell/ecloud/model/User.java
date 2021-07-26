@@ -1,5 +1,8 @@
 package com.dell.ecloud.model;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,10 +11,13 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -36,42 +42,9 @@ public class User implements UserDetails {
         this.karma = karma;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-    public String getUniversity() {
-        return university;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override
@@ -92,34 +65,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public long getKarma() {
-        return karma;
-    }
-
-    public void setKarma(long karma) {
-        this.karma = karma;
-    }
-
-    public void setUniversity(String university) {
-        this.university = university;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
 }

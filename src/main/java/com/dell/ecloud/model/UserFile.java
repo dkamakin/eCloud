@@ -1,15 +1,22 @@
 package com.dell.ecloud.model;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Getter
+@Setter
 public class UserFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     private String name;
@@ -32,66 +39,6 @@ public class UserFile {
         this.description = description;
         this.category = category;
         this.fileName = fileName;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getUniversity() {
-        return university;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setUniversity(String university) {
-        this.university = university;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
 }
