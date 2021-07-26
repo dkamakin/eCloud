@@ -1,7 +1,7 @@
 package com.dell.ecloud.config;
 
 import com.dell.ecloud.model.User;
-import com.dell.ecloud.model.UserService;
+import com.dell.ecloud.model.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,7 +25,7 @@ public class AuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        log.info("Authenticate user: " + username);
+        log.info("Authenticate user: {}", username);
 
         User user = (User) userService.loadUserByUsername(username);
 
@@ -42,7 +42,7 @@ public class AuthProvider implements AuthenticationProvider {
 
             Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
-            log.info("User successfully authenticated, role = " + user.getRoles());
+            log.info("User successfully authenticated, role = {}", user.getRole());
             return new UsernamePasswordAuthenticationToken(user, password, authorities);
         } else {
             log.warn("User not found");

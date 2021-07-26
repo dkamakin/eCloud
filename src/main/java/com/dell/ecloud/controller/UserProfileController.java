@@ -31,7 +31,7 @@ public class UserProfileController {
         String nickname = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getName();
-        log.info("Getting user info " + nickname);
+        log.info("Getting user info {}", nickname);
         return ResponseEntity.ok(userDetailsService.loadUserByUsername(nickname));
     }
 
