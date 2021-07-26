@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserDetails loadUserByNickname(String nickname) throws UsernameNotFoundException {
         log.info("UserService: searching for user: " + nickname);
@@ -52,7 +56,8 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(String nickname, String username, String password) {
-        User user = new User(username, password, nickname, null, 0L);
+        User user = new User(username, passwordEncoder.encode(password),
+                nickname, null, 0L);
         user.setRole(Role.ROLE_USER);
         return saveUser(user);
     }
