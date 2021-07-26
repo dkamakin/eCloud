@@ -1,8 +1,8 @@
 package com.dell.ecloud.controller;
 
-import com.dell.ecloud.model.FileStorageService;
 import com.dell.ecloud.model.UserFile;
-import com.dell.ecloud.model.UserRepository;
+import com.dell.ecloud.model.repository.UserRepository;
+import com.dell.ecloud.model.service.FileStorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -16,13 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @Slf4j
-public class FileController {
+public class UploadsController {
 
     private final FileStorageService storageService;
     private final UserRepository userRepository;
 
     @Autowired
-    public FileController(FileStorageService storageService, UserRepository userRepository) {
+    public UploadsController(FileStorageService storageService, UserRepository userRepository) {
         this.storageService = storageService;
         this.userRepository = userRepository;
     }
@@ -37,7 +37,7 @@ public class FileController {
 
     @GetMapping("/uploads/{id}")
     public Iterable<UserFile> filesByUser(@PathVariable long id) {
-        log.info("Searching for files uploaded by " + id);
+        log.info("Searching for files uploaded by {}", id);
         return storageService.getFilesByUser(id);
     }
 

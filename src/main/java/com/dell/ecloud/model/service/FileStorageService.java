@@ -1,5 +1,8 @@
-package com.dell.ecloud.model;
+package com.dell.ecloud.model.service;
 
+import com.dell.ecloud.model.Time;
+import com.dell.ecloud.model.UserFile;
+import com.dell.ecloud.model.repository.UserFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -34,11 +37,11 @@ public class FileStorageService {
     }
 
     public Iterable<UserFile> getFilesByUser(long id) {
-        return repository.findAllByUserId(id);
+        return repository.findAllByUserid(id);
     }
 
     public void store(MultipartFile file, long id, String university, String name, String description) {
-        log.info("Storing the file (" + file.getOriginalFilename() + ')');
+        log.info("Storing the file {}", file.getOriginalFilename());
 
         try {
             if (file.isEmpty())
@@ -57,7 +60,7 @@ public class FileStorageService {
 
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
-            log.info("Saving the file (" + file.getOriginalFilename() + ") entity to the repository");
+            log.info("Saving the file ({}) entity to the repository", file.getOriginalFilename());
 
             UserFile entity = new UserFile(name, time.update().toString(), university,
                     null, description, id, file.getOriginalFilename());
@@ -66,7 +69,7 @@ public class FileStorageService {
 
             log.info("The file was stored");
         } catch (IOException e) {
-            log.error("Couldn't save the file. " + e.getMessage());
+            log.error("Couldn't save the file. {}", e.getMessage());
         }
     }
 
@@ -74,24 +77,26 @@ public class FileStorageService {
         Path file = this.rootPath.resolve(Paths
                 .get(fileName).normalize()).toAbsolutePath();
         boolean result = file.toFile().delete();
-        log.info("File (" + fileName + ") is " + (result ? "deleted" : "not deleted"));
+        log.info("File {} is {}", fileName, result ? "deleted" : "not deleted");
         return result;
     }
 
     public Resource getResource(String fileName) {
         try {
+            log.info("Get a file {}", fileName);
             Path file = this.rootPath.resolve(Paths
                     .get(fileName).normalize()).toAbsolutePath();
 
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
+                log.info("File was found, return");
                 return resource;
             } else {
                 throw new MalformedURLException("Error: wrong path (" + file + ")");
             }
         } catch (MalformedURLException e) {
-            System.out.println("Failed to return the file. " + e.getMessage());
+            log.error("Failed to return the file. {}", e.getMessage());
             return null;
         }
     }

@@ -23,4 +23,9 @@ public class Time {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return time;
+    }
+
 }

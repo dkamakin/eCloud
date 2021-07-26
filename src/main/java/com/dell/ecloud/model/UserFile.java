@@ -4,18 +4,16 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "files", schema = "public")
 public class UserFile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private long id;
 
@@ -24,21 +22,21 @@ public class UserFile {
     private String university;
     private String category;
     private String description;
-    private long userId;
-    private String fileName;
+    private long userid;
+    private String filename;
 
     protected UserFile() {
     }
 
     public UserFile(String name, String date, String university, String category, String description,
                     long userId, String fileName) {
-        this.userId = userId;
+        this.userid = userId;
         this.name = name;
         this.date = date;
         this.university = university;
         this.description = description;
         this.category = category;
-        this.fileName = fileName;
+        this.filename = fileName;
     }
 
 }

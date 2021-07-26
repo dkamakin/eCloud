@@ -1,7 +1,8 @@
 package com.dell.ecloud.config;
 
 import com.dell.ecloud.model.User;
-import com.dell.ecloud.model.UserService;
+import com.dell.ecloud.model.service.UserService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,22 +11,27 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
 @Slf4j
 @Component
+@Getter
 public class AuthProvider implements AuthenticationProvider {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        log.info("Authenticate user: " + username);
+        log.info("Authenticate user: {} : {}", username, password);
 
         User user = (User) userService.loadUserByUsername(username);
 
@@ -35,14 +41,14 @@ public class AuthProvider implements AuthenticationProvider {
         }
 
         if (user != null && (user.getUsername().equals(username) || user.getNickname().equals(username))) {
-            if (!password.matches(user.getPassword())) {
+            if (!passwordEncoder.matches(password, user.getPassword())) {
                 log.warn("Wrong password");
                 throw new BadCredentialsException("Wrong password");
             }
 
             Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
-            log.info("User successfully authenticated, role = " + user.getRoles());
+            log.info("User successfully authenticated, role = {}", user.getRole());
             return new UsernamePasswordAuthenticationToken(user, password, authorities);
         } else {
             log.warn("User not found");
