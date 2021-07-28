@@ -1,8 +1,8 @@
 package com.dell.ecloud.controller;
 
 import com.dell.ecloud.model.UserFile;
-import com.dell.ecloud.model.repository.UserRepository;
 import com.dell.ecloud.model.service.FileStorageService;
+import com.dell.ecloud.model.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -10,21 +10,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import java.io.IOException;
+
 @Slf4j
+@RestController
 public class UploadsController {
 
     private final FileStorageService storageService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UploadsController(FileStorageService storageService, UserRepository userRepository) {
+    public UploadsController(FileStorageService storageService, UserService userService) {
         this.storageService = storageService;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/uploads/{id}/{filename}")
@@ -35,6 +37,12 @@ public class UploadsController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
+    @GetMapping("/uploads/search")
+    public Iterable<UserFile> filesSearch(@RequestParam("search") String search) {
+        log.info("Trying to find {}", search);
+        return storageService.findAllByNameContaining(search);
+    }
+
     @GetMapping("/uploads/{id}")
     public Iterable<UserFile> filesByUser(@PathVariable long id) {
         log.info("Searching for files uploaded by {}", id);
@@ -43,8 +51,15 @@ public class UploadsController {
 
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/uploads/{filename}")
-    public boolean fileDelete(@PathVariable("filename") String fileName) {
-        return storageService.remove(fileName);
+    public void fileDelete(@PathVariable("filename") String fileName) {
+        try {
+            storageService.remove(fileName);
+        } catch (IOException e) {
+            log.warn("File {} wasn't deleted. {}", fileName, e.getMessage());
+            return;
+        }
+
+        log.info("File {} was deleted", fileName);
     }
 
     @GetMapping("/uploads")
@@ -55,15 +70,16 @@ public class UploadsController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
-    public String fileUpload(@RequestParam("file") MultipartFile file, String description, String university, String name) {
+    public ModelAndView fileUpload(
+            @RequestParam("file") MultipartFile file, String description, String university, String name) {
         String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getName();
 
-        long id = userRepository.findByUsername(username).getId();
+        long id = userService.getUserByUsername(username).getId();
 
         storageService.store(file, id, university, name, description);
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
 
 }

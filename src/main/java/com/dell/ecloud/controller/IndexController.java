@@ -1,14 +1,15 @@
 package com.dell.ecloud.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 public class IndexController {
 
     @GetMapping("/")
-    public String showMainPage() {
-        return "index";
+    public ModelAndView showMainPage() {
+        return new ModelAndView("index");
     }
 
 }
