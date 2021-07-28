@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @RestController
@@ -60,7 +61,8 @@ public class UploadsController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/uploads")
-    public String fileUpload(@RequestParam("file") MultipartFile file, String description, String university, String name) {
+    public ModelAndView fileUpload(
+            @RequestParam("file") MultipartFile file, String description, String university, String name) {
         String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getName();
@@ -68,7 +70,7 @@ public class UploadsController {
         long id = userService.getUserByUsername(username).getId();
 
         storageService.store(file, id, university, name, description);
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
 
 }
