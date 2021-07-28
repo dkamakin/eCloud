@@ -81,6 +81,10 @@ public class FileStorageService {
         return result;
     }
 
+    public Iterable<UserFile> findAllByNameContaining(String search) {
+        return repository.findAllByNameContaining(search);
+    }
+
     public Resource getResource(String fileName) {
         try {
             log.info("Get a file {}", fileName);

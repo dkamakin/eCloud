@@ -7,16 +7,20 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
 @Slf4j
+@RestController
 public class UserProfileController {
 
-    @Autowired
     public UserDetailsService userDetailsService;
+
+    @Autowired
+    public UserProfileController(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/profile")

@@ -15,11 +15,18 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
     public UserDetails loadUserByNickname(String nickname) throws UsernameNotFoundException {
         log.info("UserService: searching for user: " + nickname);
