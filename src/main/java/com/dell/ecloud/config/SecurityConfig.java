@@ -9,19 +9,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthProvider authProvider;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfig(AuthProvider authProvider, PasswordEncoder passwordEncoder) {
+    public SecurityConfig(AuthProvider authProvider) {
         this.authProvider = authProvider;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean

@@ -73,12 +73,8 @@ public class FileStorageService {
         }
     }
 
-    public boolean remove(String fileName) {
-        Path file = this.rootPath.resolve(Paths
-                .get(fileName).normalize()).toAbsolutePath();
-        boolean result = file.toFile().delete();
-        log.info("File {} is {}", fileName, result ? "deleted" : "not deleted");
-        return result;
+    public void remove(String fileName) throws IOException {
+        Files.delete(this.rootPath.resolve(Paths.get(fileName)).toAbsolutePath());
     }
 
     public Iterable<UserFile> findAllByNameContaining(String search) {

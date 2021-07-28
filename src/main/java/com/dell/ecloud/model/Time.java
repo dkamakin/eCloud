@@ -9,9 +9,9 @@ import java.time.format.DateTimeFormatter;
 public class Time {
 
     private static final String DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss";
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
 
-    private static String time;
+    private String stringTime;
 
     public Time() {
         update();
@@ -19,13 +19,13 @@ public class Time {
 
     public Time update() {
         LocalDateTime localDateTime = LocalDateTime.now();
-        time = localDateTime.format(formatter);
+        stringTime = localDateTime.format(formatter);
         return this;
     }
 
     @Override
     public String toString() {
-        return time;
+        return stringTime;
     }
 
 }

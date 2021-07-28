@@ -9,9 +9,9 @@ function search() {
     container.classList.add('loading');
     container.innerHTML = "";
     container.classList.add('loading');
-    const search = document.getElementById('searchField').value;
+    const searchString = document.getElementById('searchField').value;
 
-    axios.get('/uploads/search', {params : {search: search}})
+    axios.get('/uploads/search', {params : {search: searchString}})
         .then((response) => {
             for (let post of response.data) {
                 container.innerHTML += "<div class=\"card\">\n" +

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Slf4j
 @RestController
 public class UploadsController {
@@ -49,8 +51,15 @@ public class UploadsController {
 
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/uploads/{filename}")
-    public boolean fileDelete(@PathVariable("filename") String fileName) {
-        return storageService.remove(fileName);
+    public void fileDelete(@PathVariable("filename") String fileName) {
+        try {
+            storageService.remove(fileName);
+        } catch (IOException e) {
+            log.warn("File {} wasn't deleted. {}", fileName, e.getMessage());
+            return;
+        }
+
+        log.info("File {} was deleted", fileName);
     }
 
     @GetMapping("/uploads")
