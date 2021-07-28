@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class UserProfileController {
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     public UserProfileController(UserDetailsService userDetailsService) {

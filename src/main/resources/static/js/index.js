@@ -11,14 +11,20 @@ function search() {
     container.classList.add('loading');
     const searchString = document.getElementById('searchField').value;
 
-    axios.get('/uploads/search', {params : {search: searchString}})
+    axios.get('/uploads/search', {params: {search: searchString}})
         .then((response) => {
             for (let post of response.data) {
                 container.innerHTML += "<div class=\"card\">\n" +
+                    "  <div class='card-header'>" +
+                    post['university'] +
+                    "  </div> " +
                     "  <div class=\"card-body\">\n" +
                     "    <h5 class=\"card-title\"> " + post['name'] + "</h5>\n" +
                     "    <p class=\"card-text\">" + post['description'] + "</p>\n" +
-                    "    <a href=\"/uploads/" + post['userid'] + '/' + post['filename'] + "\" class=\"btn btn-primary\">Download</a>\n" +
+                    "    <a href=\"/uploads/" + post['userid'] + '/' + post['filename'] + "\" class=\"btn btn-primary\">Download</a>\ " +
+                    "  <div class='card-footer text-muted'>" +
+                    post['date'] +
+                    "  </div>" +
                     "  </div>\n" +
                     "</div>"
             }
