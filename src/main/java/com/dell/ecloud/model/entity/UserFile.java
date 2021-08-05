@@ -1,4 +1,4 @@
-package com.dell.ecloud.model;
+package com.dell.ecloud.model.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

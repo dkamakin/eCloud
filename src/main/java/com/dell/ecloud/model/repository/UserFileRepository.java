@@ -1,6 +1,6 @@
 package com.dell.ecloud.model.repository;
 
-import com.dell.ecloud.model.UserFile;
+import com.dell.ecloud.model.entity.UserFile;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

@@ -8,12 +8,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @RestController
+@RequestMapping("/profile")
 public class UserProfileController {
 
     private final UserDetailsService userDetailsService;
@@ -24,13 +26,13 @@ public class UserProfileController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/profile")
+    @GetMapping
     public ModelAndView showRegistrationPage() {
         return new ModelAndView("profile");
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/profile/info")
+    @GetMapping("/info")
     @ResponseBody
     public ResponseEntity<UserDetails> getUserInfo() {
         String nickname = SecurityContextHolder

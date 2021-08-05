@@ -1,12 +1,16 @@
 package com.dell.ecloud.model.service;
 
-import com.dell.ecloud.model.Time;
-import com.dell.ecloud.model.UserFile;
+import com.dell.ecloud.model.entity.UserFile;
 import com.dell.ecloud.model.repository.UserFileRepository;
+import com.dell.ecloud.model.time.ITime;
+import com.dell.ecloud.model.time.Time;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Collections;
 import java.util.Objects;
 
 @Service
@@ -24,7 +29,7 @@ public class FileStorageService {
 
     private final Path rootPath = Paths.get("uploads");
     private final UserFileRepository repository;
-    private final Time time;
+    private final ITime time;
 
     @Autowired
     public FileStorageService(UserFileRepository repository) {
@@ -34,6 +39,17 @@ public class FileStorageService {
 
     public Iterable<UserFile> getFilesList() {
         return repository.findAll();
+    }
+
+    public Iterable<UserFile> getFilesList(Integer page, Integer size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<UserFile> result = repository.findAll(paging);
+
+        if (result.hasContent()) {
+            return result.getContent();
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public Iterable<UserFile> getFilesByUser(long id) {

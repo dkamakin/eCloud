@@ -1,7 +1,7 @@
 package com.dell.ecloud.model.service;
 
 import com.dell.ecloud.model.Role;
-import com.dell.ecloud.model.User;
+import com.dell.ecloud.model.entity.User;
 import com.dell.ecloud.model.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
