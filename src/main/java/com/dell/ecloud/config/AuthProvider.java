@@ -1,6 +1,6 @@
 package com.dell.ecloud.config;
 
-import com.dell.ecloud.model.User;
+import com.dell.ecloud.model.entity.User;
 import com.dell.ecloud.model.service.UserService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
