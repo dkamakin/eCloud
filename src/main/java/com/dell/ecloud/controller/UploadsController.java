@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +30,6 @@ public class UploadsController {
     }
 
     @GetMapping("/{id}/{filename}")
-    @ResponseBody
     public ResponseEntity<Resource> fileDownload(@PathVariable("id") long id, @PathVariable("filename") String fileName) {
         Resource file = storageService.getResource(String.valueOf(id) + '/' + fileName);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
@@ -48,11 +48,14 @@ public class UploadsController {
         return storageService.getFilesByUser(id);
     }
 
+    @GetMapping("/pages")
+    public ResponseEntity<String> getPagesAmount(@RequestParam(defaultValue = "10") Integer size) {
+        return new ResponseEntity<>(storageService.getPagesAmount(size).toString(), HttpStatus.OK);
+    }
+
     @GetMapping
-    @ResponseBody
     public Iterable<UserFile> filesList(@RequestParam(defaultValue = "0") Integer page,
                                         @RequestParam(defaultValue = "10") Integer size) {
-        log.info("Pagination: page ({}), size({})", page, size);
         return storageService.getFilesList(page, size);
     }
 

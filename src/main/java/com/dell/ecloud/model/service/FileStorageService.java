@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -38,10 +39,12 @@ public class FileStorageService {
     }
 
     public Iterable<UserFile> getFilesList() {
+        log.info("Returning files list");
         return repository.findAll();
     }
 
     public Iterable<UserFile> getFilesList(Integer page, Integer size) {
+        log.info("Pagination: page ({}), size({})", page, size);
         Pageable paging = PageRequest.of(page, size);
         Page<UserFile> result = repository.findAll(paging);
 
@@ -50,6 +53,12 @@ public class FileStorageService {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public Integer getPagesAmount(Integer size) {
+        Integer amount = ((ArrayList<UserFile>) repository.findAll()).size() / size;
+        log.info("Returning pages amount: {}", amount);
+        return amount;
     }
 
     public Iterable<UserFile> getFilesByUser(long id) {
